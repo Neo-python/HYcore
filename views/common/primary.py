@@ -4,7 +4,7 @@ from flask import request, g
 from views.common import api
 from init import client, Redis, sms, cos_sts, wechat_api
 from forms.common import primary as forms
-from models.HYModels.common import Images
+from models.common import Images
 from plugins.HYplugins.common import ordinary
 from plugins.HYplugins.error import ViewException
 
@@ -27,7 +27,7 @@ def upload_url():
     path = f'/test/{name}.{form.suffix.data}'
     url = client.get_presigned_url(config.Bucket, path, Method='POST')
     image_url = f'{config.cos_base_url}{path}'
-    Images(user_uuid=form.user_uuid.data, url=image_url, genre=form.genre.data, status=0).direct_commit_()
+    Images(user_uuid=form.user_uuid.data, url=image_url, genre=form.genre.data, status=1).direct_commit_()
     return ordinary.result_format(data={'upload_url': url, 'image_url': image_url})
 
 
