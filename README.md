@@ -5,4 +5,4 @@
 - 启动命令
 
 
-    celery -A run_celery:celery worker
+    celery -A plugins.private.asynchronous.run_celery:celery worker
