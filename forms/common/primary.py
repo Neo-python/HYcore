@@ -1,13 +1,21 @@
 from forms.fields.primary import *
-from plugins.HYplugins.form import BaseForm, VM
+from plugins.HYplugins.form import BaseForm, VM, JsonField
 from plugins.HYplugins.form.fields import PhoneField, CodeField
 
 
-class SMSCodeForm(BaseForm, PhoneField, CodeField):
+class SMSCodeForm(BaseForm, PhoneField, CodeField, SmsTemplateIdField):
     """短信发送表单"""
 
-    template_id = wtforms.StringField(validators=[
-        DataRequired(message=VM.say('required', '正文内容编号'))
+
+class SMSBatchForm(BaseForm, SmsTemplateIdField):
+    """批量发送短信"""
+
+    phone_list = JsonField(validators=[
+        DataRequired(message=VM.say('required', '手机号名单'))
+    ])
+
+    params = JsonField(validators=[
+        DataRequired(message=VM.say('required', '短信参数'))
     ])
 
 

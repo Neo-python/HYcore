@@ -3,6 +3,7 @@ import config
 import logging
 import redis
 from flask import Flask
+from celery import Celery
 from pymysql import install_as_MySQLdb
 from plugins.HYplugins.sms import SMS
 from plugins.HYplugins.orm import db
@@ -10,6 +11,10 @@ from plugins.HYplugins import wechat
 from sts.sts import Sts
 from qcloud_cos import CosConfig
 from qcloud_cos import CosS3Client
+
+# celery
+celery = Celery(__name__, broker=config.CELERY_BROKER_URL, backend=config.CELERY_BACKEND_URL,
+                include=['asynchronous.periodic_task'])
 
 # 短信
 sms = SMS(app_id=config.SMS_APP_ID, app_key=config.SMS_APP_KEY)

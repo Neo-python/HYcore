@@ -1,8 +1,9 @@
 import config
 import uuid
-from flask import request, g
+from flask import request
 from views.common import api
-from init import client, Redis, sms, cos_sts, wechat_api
+from init import client, sms, cos_sts, wechat_api
+from asynchronous import tasks
 from forms.common import primary as forms
 from models.common import Images
 from plugins.HYplugins.common import ordinary
@@ -52,5 +53,20 @@ def send_sms():
     sms.send(template_id=form.template_id.data, phone_number=form.phone.data,
              sms_sign='台州海嘉粤运输有限公司',
              params=[form.code.data, 5])
+
+    return ordinary.result_format()
+
+
+@api.route('/send_sms/batch/', methods=['POST'])
+def batch_sms():
+    """批量发送短信"""
+
+    form = forms.SMSBatchForm().validate_()
+
+    tasks.batch_sms.apply_async(kwargs={
+        'template_id': form.template_id.data,
+        'phone_list': form.phone_list.data,
+        'params': form.params.data
+    })
 
     return ordinary.result_format()
