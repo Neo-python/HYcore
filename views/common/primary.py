@@ -2,7 +2,7 @@ import config
 import uuid
 from flask import request
 from views.common import api
-from init import client, sms, cos_sts, wechat_api
+from init import client, sms, cos_sts, wechat_api, position
 from asynchronous import tasks
 from forms.common import primary as forms
 from models.common import Images
@@ -69,4 +69,18 @@ def batch_sms():
         'params': form.params.data
     })
 
+    return ordinary.result_format()
+
+
+@api.route('/position/distance/', methods=['POST'])
+def position_distance():
+    """计算位置距离
+    origin原点只支持单点
+    destinations目标点支持多点
+    :return:
+    """
+    form = forms.PositionDistanceForm().validate_()
+    result = position.distance(origin=form.origin.data, to=form.destinations.data)
+    print(result)
+    # data = [{'factory_id': item[0], **item[1]} for item in zip(form.ids, result)]
     return ordinary.result_format()

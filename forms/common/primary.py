@@ -45,3 +45,13 @@ class GetOpenIdForm(BaseForm):
         DataRequired(message=VM.say('required', 'code')),
         # Length(max=10, message=VM.say('length', 'code', 1, 10))
     ])
+
+
+class PositionDistanceForm(BaseForm):
+    """位置计算距离"""
+    origin = wtforms.StringField(validators=[
+        DataRequired(message=VM.say('required', '原点/起始点坐标'))
+    ])
+    destinations = JsonField(validators=[
+        DataRequired(message=VM.say('required', '目标点坐标'))
+    ])
