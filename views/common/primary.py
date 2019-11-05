@@ -80,7 +80,6 @@ def position_distance():
     :return:
     """
     form = forms.PositionDistanceForm().validate_()
-    result = position.distance(origin=form.origin.data, to=form.destinations.data)
-    print(result)
-    # data = [{'factory_id': item[0], **item[1]} for item in zip(form.ids, result)]
-    return ordinary.result_format()
+    result = position.distance(origin=form.origin.data, destinations=form.destinations.data)
+
+    return ordinary.result_format(data=result)
