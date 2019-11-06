@@ -41,9 +41,6 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 def register_blueprint(app):
     """注册蓝图"""
-    # from views.user import api
-    # app.register_blueprint(api)
-    #
     from views.common import api
     app.register_blueprint(api)
 
