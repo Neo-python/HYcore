@@ -36,7 +36,7 @@ class WechatApi:
         url = f'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={config.APP_ID}&secret={config.SECRET_KEY}'
 
         result = requests.get(url=url)
-        print(result)
+        print(result.json())
 
     def __call__(self, *args, **kwargs):
         from init import Redis
