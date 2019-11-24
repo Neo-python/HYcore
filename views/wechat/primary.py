@@ -9,5 +9,5 @@ def signature():
     """验证消息的确来自微信服务器"""
     wechat_message_crypt = WXBizMsgCrypt.WXBizMsgCrypt(sToken=config.APP_SERVER_TOKEN,
                                                        sEncodingAESKey=config.APP_EncodingAESKey, sAppId=config.APP_ID)
-    echostr = request.args.get('echostr')
+    echostr = request.args.get('echostr', default="")
     return echostr
