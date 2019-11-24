@@ -1,15 +1,15 @@
-#!/bin/bash
 import os
 
 print('start')
 # core
 # 'uwsgi --reload /home/ubuntu/neo/HYcore/server.pid;'
-os.system('cd /home/ubuntu/neo/HYcore/models/HYModels;'
-          'git pull;'
-          'cd /home/ubuntu/neo/HYcore/plugins/HYplugins;'
-          'git pull;'
-          'source /home/ubuntu/neo/venvs/core/bin/activate;'
-          )
+os.system(
+    '. /home/ubuntu/neo/venvs/core/bin/activate;'
+    'cd /home/ubuntu/neo/HYcore/models/HYModels;'
+    'git pull;'
+    'cd /home/ubuntu/neo/HYcore/plugins/HYplugins;'
+    'git pull;'
+)
 
 print('core complete')
 
@@ -19,7 +19,7 @@ os.system(
     'git pull;'
     'cd /home/ubuntu/neo/HYdriver/plugins/HYplugins;'
     'git pull;'
-    'source /home/ubuntu/neo/venvs/driver/bin/activate;'
+    '. /home/ubuntu/neo/venvs/driver/bin/activate;'
     'uwsgi --reload /home/ubuntu/neo/HYdriver/server.pid;'
 )
 print('core factory')
@@ -30,7 +30,7 @@ os.system(
     'git pull;'
     'cd /home/ubuntu/neo/HYdriver/plugins/HYplugins;'
     'git pull;'
-    'source /home/ubuntu/neo/venvs/driver/bin/activate;'
+    '. /home/ubuntu/neo/venvs/driver/bin/activate;'
     'uwsgi --reload /home/ubuntu/neo/HYdriver/server.pid;'
 )
 
@@ -41,7 +41,7 @@ os.system(
     'git pull;'
     'cd /home/ubuntu/neo/HYmanager/plugins/HYplugins;'
     'git pull;'
-    'source /home/ubuntu/neo/venvs/manager/bin/activate;'
+    '. /home/ubuntu/neo/venvs/manager/bin/activate;'
     'uwsgi --reload /home/ubuntu/neo/HYmanager/server.pid;'
 )
 print('core manager')
