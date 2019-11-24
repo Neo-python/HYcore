@@ -14,7 +14,6 @@ from plugins.HYplugins.error import ViewException
 def get_open_id():
     """获取open_id"""
     form = forms.GetOpenIdForm(request.args).validate_()
-    print(wechat_api.update_access_token())
     return ordinary.result_format(data=wechat_api.get_open_id(form.code.data, port=form.port.data))
 
 
