@@ -38,7 +38,7 @@ os.system(
     'killall -9 celery;'
     'cd /home/ubuntu/neo/HYcore;'
     'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
-    # 暂时未开启此项功能
+
     # 'nohup celery beat -A run_celery:celery > beat.out &'
 
 )
