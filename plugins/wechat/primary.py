@@ -33,7 +33,7 @@ class WechatApi:
 
     def update_access_token(self) -> str:
         """向腾讯服务器请求"""
-        url = f'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={config.APP_ID}&secret={config.SECRET_KEY}'
+        url = f'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={config.APP_ID}&secret={config.APP_SECRET}'
 
         result = requests.get(url=url)
         print(result.json())
