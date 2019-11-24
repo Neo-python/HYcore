@@ -43,6 +43,8 @@ def register_blueprint(app):
     """注册蓝图"""
     from views.common import api
     app.register_blueprint(api)
+    from views.wechat import api
+    app.register_blueprint(api)
 
 
 def create_app():

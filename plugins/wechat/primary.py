@@ -18,7 +18,7 @@ class WechatApi:
         # if request.get_json(force=True).get('code'):
         #     return request.get_json(force=True).get('code')
         # real_code = request.get_json(force=True).get('code')
-        url = f'https://api.weixin.qq.com/sns/jscode2session?appid={self.app_id}&secret={self.app_secret}&js_code={code}&grant_type=authorization_code'
+        url = f'https://api.weixin.qq.com/cgi-bin/user/info?access_token={self.get_access_token()}&openid=OPENID&lang=zh_CN'
         result = requests.get(url)
         result = result.json()
         return result['openid']
@@ -36,7 +36,10 @@ class WechatApi:
         url = f'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={config.APP_ID}&secret={config.APP_SECRET}'
 
         result = requests.get(url=url)
-        print(result.json())
+        result = result.json()
+        access_token = result['access_token']
+        self.Redis.set(self.access_token_redis_key, access_token, ex=7140)
+        return access_token
 
     def __call__(self, *args, **kwargs):
         from init import Redis
