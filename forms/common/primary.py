@@ -46,6 +46,10 @@ class GetOpenIdForm(BaseForm):
         # Length(max=10, message=VM.say('length', 'code', 1, 10))
     ])
 
+    port = wtforms.StringField(validators=[
+        DataRequired(message=VM.say('required', 'port'))
+    ])
+
 
 class PositionDistanceForm(BaseForm):
     """位置计算距离"""
