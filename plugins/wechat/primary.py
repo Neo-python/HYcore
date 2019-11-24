@@ -12,8 +12,6 @@ class WechatApi:
         """对象初始化"""
         self.app_id = app_id
         self.app_secret = app_secret
-        from init import Redis
-        self.Redis = Redis
 
     def get_open_id(self, code: str, port: str) -> str:
         """获取open_id"""
@@ -30,7 +28,8 @@ class WechatApi:
 
     def get_access_token(self) -> str:
         """优先从redis缓存中获取"""
-        access_token = self.Redis.get(self.access_token_redis_key)
+        from init import Redis
+        access_token = Redis.get(self.access_token_redis_key)
         if access_token:
             return access_token
         else:
@@ -38,11 +37,11 @@ class WechatApi:
 
     def update_access_token(self) -> str:
         """向腾讯服务器请求"""
-
+        from init import Redis
         url = f'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={config.APP_ID}&secret={config.APP_SECRET}'
 
         result = requests.get(url=url)
         result = result.json()
         access_token = result['access_token']
-        self.Redis.set(self.access_token_redis_key, access_token, ex=7140)
+        Redis.set(self.access_token_redis_key, access_token, ex=7140)
         return access_token
