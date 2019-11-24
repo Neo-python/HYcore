@@ -30,7 +30,7 @@ os.system(
     'git pull;'
     'uwsgi --reload /home/ubuntu/neo/HYfactory/server.pid;'
 )
-print('core factory')
+print('factory complete')
 
 # driver
 os.system(
@@ -44,7 +44,7 @@ os.system(
     'uwsgi --reload /home/ubuntu/neo/HYdriver/server.pid;'
 )
 
-print('core driver')
+print('driver complete')
 # manager
 os.system(
     'cd /home/ubuntu/neo/HYmanager/models/HYModels;'
@@ -56,7 +56,7 @@ os.system(
     'git pull;'
     'uwsgi --reload /home/ubuntu/neo/HYmanager/server.pid;'
 )
-print('core manager')
+print('manager complete')
 # os.system(
 #     'cd /home/ubuntu/neo/HYcore/models/HYModels;'
 #     'git pull;'
