@@ -4,7 +4,7 @@ print('start')
 # core
 # 'uwsgi --reload /home/ubuntu/neo/HYcore/server.pid;'
 os.system(
-
+    'pip install -r requirements.txt;'
     'cd /home/ubuntu/neo/HYcore/models/HYModels;'
     'git pull;'
     'cd /home/ubuntu/neo/HYcore/plugins/HYplugins;'
@@ -21,6 +21,7 @@ print('core complete')
 
 # factory
 os.system(
+    'pip install -r requirements.txt;'
     'cd /home/ubuntu/neo/HYfactory/models/HYModels;'
     'git pull;'
     'cd /home/ubuntu/neo/HYfactory/plugins/HYplugins;'
@@ -34,6 +35,7 @@ print('factory complete')
 
 # driver
 os.system(
+    'pip install -r requirements.txt;'
     'cd /home/ubuntu/neo/HYdriver/models/HYModels;'
     'git pull;'
     'cd /home/ubuntu/neo/HYdriver/plugins/HYplugins;'
@@ -47,6 +49,7 @@ os.system(
 print('driver complete')
 # manager
 os.system(
+    'pip install -r requirements.txt;'
     'cd /home/ubuntu/neo/HYmanager/models/HYModels;'
     'git pull;'
     'cd /home/ubuntu/neo/HYmanager/plugins/HYplugins;'
