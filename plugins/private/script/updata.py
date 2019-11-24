@@ -10,6 +10,8 @@ os.system(
     'cd /home/ubuntu/neo/HYcore/plugins/HYplugins;'
     'git pull;'
     '. /home/ubuntu/neo/venvs/core/bin/activate;'
+    'cd /home/ubuntu/neo/HYcore;'
+    'git pull;'
     'killall -9 celery;'
     'cd /home/ubuntu/neo/HYcore;'
     'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
@@ -19,12 +21,14 @@ print('core complete')
 
 # factory
 os.system(
-    'cd /home/ubuntu/neo/HYdriver/models/HYModels;'
+    'cd /home/ubuntu/neo/HYfactory/models/HYModels;'
     'git pull;'
-    'cd /home/ubuntu/neo/HYdriver/plugins/HYplugins;'
+    'cd /home/ubuntu/neo/HYfactory/plugins/HYplugins;'
     'git pull;'
-    '. /home/ubuntu/neo/venvs/driver/bin/activate;'
-    'uwsgi --reload /home/ubuntu/neo/HYdriver/server.pid;'
+    '. /home/ubuntu/neo/venvs/factory/bin/activate;'
+    'cd /home/ubuntu/neo/HYfactory;'
+    'git pull;'
+    'uwsgi --reload /home/ubuntu/neo/HYfactory/server.pid;'
 )
 print('core factory')
 
@@ -35,6 +39,8 @@ os.system(
     'cd /home/ubuntu/neo/HYdriver/plugins/HYplugins;'
     'git pull;'
     '. /home/ubuntu/neo/venvs/driver/bin/activate;'
+    'cd /home/ubuntu/neo/HYdriver;'
+    'git pull;'
     'uwsgi --reload /home/ubuntu/neo/HYdriver/server.pid;'
 )
 
@@ -46,6 +52,8 @@ os.system(
     'cd /home/ubuntu/neo/HYmanager/plugins/HYplugins;'
     'git pull;'
     '. /home/ubuntu/neo/venvs/manager/bin/activate;'
+    'cd /home/ubuntu/neo/HYmanager;'
+    'git pull;'
     'uwsgi --reload /home/ubuntu/neo/HYmanager/server.pid;'
 )
 print('core manager')
