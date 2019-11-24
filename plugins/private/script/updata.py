@@ -4,11 +4,15 @@ print('start')
 # core
 # 'uwsgi --reload /home/ubuntu/neo/HYcore/server.pid;'
 os.system(
-    '. /home/ubuntu/neo/venvs/core/bin/activate;'
+
     'cd /home/ubuntu/neo/HYcore/models/HYModels;'
     'git pull;'
     'cd /home/ubuntu/neo/HYcore/plugins/HYplugins;'
     'git pull;'
+    '. /home/ubuntu/neo/venvs/core/bin/activate;'
+    'killall -9 celery;'
+    'cd /home/ubuntu/neo/HYcore;'
+    'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
 )
 
 print('core complete')
@@ -45,13 +49,6 @@ os.system(
     'uwsgi --reload /home/ubuntu/neo/HYmanager/server.pid;'
 )
 print('core manager')
-# celery
-os.system(
-    'killall -9 celery;'
-    'cd /home/ubuntu/neo/HYcore;'
-    'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
-)
-print('core celery')
 # os.system(
 #     'cd /home/ubuntu/neo/HYcore/models/HYModels;'
 #     'git pull;'
