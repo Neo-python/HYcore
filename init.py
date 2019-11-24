@@ -7,7 +7,7 @@ from celery import Celery
 from pymysql import install_as_MySQLdb
 from plugins.HYplugins.sms import SMS
 from plugins.HYplugins.orm import db
-from plugins.HYplugins import wechat
+from plugins import wechat
 from plugins.HYplugins.common.position import Position
 from sts.sts import Sts
 from qcloud_cos import CosConfig
