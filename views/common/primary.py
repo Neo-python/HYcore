@@ -50,9 +50,9 @@ def send_sms():
     """
     form = forms.SMSCodeForm().validate_()
 
-    sms.send(template_id=form.template_id.data, phone_number=form.phone.data,
-             sms_sign='台州海嘉粤运输有限公司',
-             params=[form.code.data, 5])
+    # sms.send(template_id=form.template_id.data, phone_number=form.phone.data,
+    #          sms_sign='台州海嘉粤运输有限公司',
+    #          params=[form.code.data, 5])
 
     return ordinary.result_format()
 
