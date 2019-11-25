@@ -6,3 +6,6 @@
 
 
     celery -A plugins.private.asynchronous.run_celery:celery worker
+# 全项目更新
+- 启动命令
+    

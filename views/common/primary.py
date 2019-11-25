@@ -23,7 +23,7 @@ def upload_url():
     form = forms.UploadUrlForm(request.args).validate_()
 
     if not form.genre.data and not form.suffix.data:
-        raise ViewException(error_code=4005, message='<genre>图片用途类型或<suffix>图片文件类型,不能为空.')
+        raise ViewException(error_code=5005, message='<genre>图片用途类型或<suffix>图片文件类型,不能为空.')
     name = uuid.uuid1().hex
     path = f'/test/{name}.{form.suffix.data}'
     url = client.get_presigned_url(config.Bucket, path, Method='POST')
