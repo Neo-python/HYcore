@@ -7,6 +7,12 @@ class SMSCodeForm(BaseForm, PhoneField, CodeField, SmsTemplateIdField):
     """短信发送表单"""
 
 
+class NoticeManagerForm(BaseForm, SmsTemplateIdField):
+    params = JsonField(validators=[
+        DataRequired(message=VM.say('required', '短信参数'))
+    ])
+
+
 class SMSBatchForm(BaseForm, SmsTemplateIdField):
     """批量发送短信"""
 

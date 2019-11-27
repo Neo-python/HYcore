@@ -6,6 +6,7 @@ from init import client, sms, cos_sts, wechat_api, position
 from asynchronous import tasks
 from forms.common import primary as forms
 from models.common import Images
+from models.system import Admin
 from plugins.HYplugins.common import ordinary
 from plugins.HYplugins.error import ViewException
 
@@ -51,8 +52,22 @@ def send_sms():
     form = forms.SMSCodeForm().validate_()
 
     sms.send(template_id=form.template_id.data, phone_number=form.phone.data,
-             sms_sign='台州海嘉粤运输有限公司',
-             params=[form.code.data, 5])
+             sms_sign=config.SMS_SIGN, params=[form.code.data, 5])
+
+    return ordinary.result_format()
+
+
+@api.route('/send_sms/notice_manager/', methods=['POST'])
+def notice_manager():
+    """通知管理员"""
+
+    form = forms.NoticeManagerForm().validate_()
+
+    admins = Admin.query.filter_by(sms_status=1).all()
+
+    phone_numbers = [admin.phone for admin in admins]
+    if phone_numbers:
+        sms.multi_send(template_id=form.template_id.data, params=form.params.data, sms_sign=config.SMS_SIGN)
 
     return ordinary.result_format()
 
