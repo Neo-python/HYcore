@@ -66,9 +66,9 @@ def notice_manager():
     admins = Admin.query.filter_by(sms_status=1).all()
 
     phone_numbers = [admin.phone for admin in admins]
-    print(form.params.data)
     if phone_numbers:
-        sms.multi_send(template_id=form.template_id.data, params=form.params.data, sms_sign=config.SMS_SIGN)
+        sms.multi_send(template_id=form.template_id.data, phone_numbers=phone_numbers, params=form.params.data,
+                       sms_sign=config.SMS_SIGN)
 
     return ordinary.result_format()
 
