@@ -60,11 +60,9 @@ def send_sms():
 @api.route('/send_sms/notice_manager/', methods=['POST'])
 def notice_manager():
     """通知管理员"""
-
     form = forms.NoticeManagerForm().validate_()
 
     admins = Admin.query.filter_by(sms_status=1).all()
-
     phone_numbers = [admin.phone for admin in admins]
 
     if phone_numbers:
