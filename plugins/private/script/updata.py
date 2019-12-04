@@ -10,8 +10,8 @@ os.system(
     'git pull;'
     '. /home/ubuntu/neo/venvs/core/bin/activate;'
     'cd /home/ubuntu/neo/HYcore;'
-    'pip install -r requirements.txt;'
     'git pull;'
+    'pip install -r requirements.txt;'
     'killall -9 celery;'
     'cd /home/ubuntu/neo/HYcore;'
     'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
@@ -27,8 +27,8 @@ os.system(
     'git pull;'
     '. /home/ubuntu/neo/venvs/factory/bin/activate;'
     'cd /home/ubuntu/neo/HYfactory;'
-    'pip install -r requirements.txt;'
     'git pull;'
+    'pip install -r requirements.txt;'
     'uwsgi --reload /home/ubuntu/neo/HYfactory/server.pid;'
 )
 print('factory complete')
@@ -41,8 +41,8 @@ os.system(
     'git pull;'
     '. /home/ubuntu/neo/venvs/driver/bin/activate;'
     'cd /home/ubuntu/neo/HYdriver;'
-    'pip install -r requirements.txt;'
     'git pull;'
+    'pip install -r requirements.txt;'
     'uwsgi --reload /home/ubuntu/neo/HYdriver/server.pid;'
 )
 
@@ -55,8 +55,8 @@ os.system(
     'git pull;'
     '. /home/ubuntu/neo/venvs/manager/bin/activate;'
     'cd /home/ubuntu/neo/HYmanager;'
-    'pip install -r requirements.txt;'
     'git pull;'
+    'pip install -r requirements.txt;'
     'uwsgi --reload /home/ubuntu/neo/HYmanager/server.pid;'
 )
 print('manager complete')
