@@ -13,7 +13,6 @@ import hashlib
 import time
 import struct
 
-import binascii
 from Crypto.Cipher import AES
 import xml.etree.cElementTree as ET
 import socket
@@ -255,4 +254,3 @@ class WXBizMsgCrypt(object):
         pc = Prpcrypt(self.key)
         ret, xml_content = pc.decrypt(encrypt, self.appid)
         return ret, xml_content
-
