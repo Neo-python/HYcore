@@ -25,4 +25,4 @@ def create_menu():
     with open("wechat_menu_config.json", "r", encoding="utf-8") as file:
         # menu_config = json.load(file)
         # print(file.read())
-        wechat_api.create_menu(body=file.read(), port="8090")
+        wechat_api.create_menu(body=file.read().encode(encoding='utf-8'), port="8090")
