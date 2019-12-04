@@ -23,6 +23,7 @@ def event():
     timestamp = request.args.get('timestamp')
     nonce = request.args.get('nonce')
     msg_signature = request.args.get('msg_signature')
+    print(request.get_data())
     _, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
                                              sMsgSignature=msg_signature, sTimeStamp=timestamp, sNonce=nonce)
     content = xmltodict.parse(xml_input=xml)['xml']
