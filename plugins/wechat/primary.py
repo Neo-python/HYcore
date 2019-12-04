@@ -104,7 +104,12 @@ class Event(object):
 
     def text(self):
         """文本类型事件"""
-        result = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], self.data['Content'])
+        print('文本类型事件')
+        print(self.data['FromUserName'])
+        print(self.data['ToUserName'])
+        print(self.data['Content'])
+        result = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
+                                 content=self.data['Content'])
         self.reply_message = result
 
     def handle(self):
