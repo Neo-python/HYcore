@@ -1,9 +1,6 @@
-import json
-import config
 from flask import request
-from init import wechat_api
+from init import wechat_api, wechat_message_crypt
 from views.wechat import api
-from plugins.wechat.message_encrypt import WXBizMsgCrypt
 
 
 @api.route('/signature/', methods=['GET', 'POST'])
@@ -13,12 +10,11 @@ def signature():
     timestamp = request.args.get('timestamp')
     nonce = request.args.get('nonce')
     echo_str = request.args.get('echostr')
-    wechat_message_crypt = WXBizMsgCrypt.WXBizMsgCrypt(sToken=config.APP_SERVER_TOKEN,
-                                                       sEncodingAESKey=config.APP_EncodingAESKey, sAppId=config.APP_ID)
-    print(request.method, request.data, request.get_data())
+
+    print(request.method, request.data)
     if request.method == "POST":
         print(
-            wechat_message_crypt.DecryptMsg(request.data, sMsgSignature=signature, sTimeStamp=timestamp, sNonce=nonce))
+            wechat_message_crypt.DecryptMsg(request.data.decode('utf-8'), sMsgSignature=signature, sTimeStamp=timestamp, sNonce=nonce))
         return 'ok'
     return wechat_message_crypt.verity_token(signature=signature, timestamp=timestamp, nonce=nonce,
                                              echo_str=echo_str)

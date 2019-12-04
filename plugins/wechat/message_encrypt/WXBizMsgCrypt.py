@@ -49,7 +49,7 @@ class SHA1:
             sortlist = [token, timestamp, nonce, encrypt]
             sortlist.sort()
             sha = hashlib.sha1()
-            sha.update("".join(sortlist).encode())
+            sha.update("".join(sortlist).encode('utf8'))
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
         except Exception as err:
             print(err)
@@ -250,6 +250,7 @@ class WXBizMsgCrypt(object):
         # 验证安全签名
         xmlParse = XMLParse()
         ret, encrypt, touser_name = xmlParse.extract(sPostData)
+
         if ret != 0:
             return ret, None
         sha1 = SHA1()
