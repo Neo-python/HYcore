@@ -1,5 +1,7 @@
 """微信相关接口"""
 import time
+import string
+import random
 import config
 import requests
 
@@ -130,8 +132,16 @@ class Event(object):
         <MsgType><![CDATA[text]]></MsgType><
         Content><![CDATA[{content}]]></Content>
         </xml>"""
-        rep, xml = self.wechat_message_crypt.EncryptMsg(text, self.nonce)
+        rep, xml = self.wechat_message_crypt.EncryptMsg(text, self.get_random_str())
         if rep == 0:
             return xml
         else:
             return None
+
+    def get_random_str(self):
+        """ 随机生成16位字符串
+        @return: 16位字符串
+        """
+        rule = string.ascii_letters + string.digits
+        str = random.sample(rule, 16)
+        return "".join(str).encode()
