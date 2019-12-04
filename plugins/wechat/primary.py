@@ -1,4 +1,7 @@
 """微信相关接口"""
+import random
+import string
+import time
 import config
 import requests
 
@@ -71,3 +74,63 @@ class WechatApi:
         url = f'https://api.weixin.qq.com/cgi-bin/menu/create?access_token={access_token}'
         result = requests.post(url=url, data=body)
         print(result.json())
+
+
+class Event(object):
+    """处理各类事件"""
+
+    def __init__(self, data: dict, wechat_message_crypt):
+        self.data = data
+        self.wechat_message_crypt = wechat_message_crypt
+        self.reply_message = None
+
+    def event(self):
+        """事件类型事件"""
+        event = self.data['Event']
+
+        if event == 'subscribe':
+            self.event_subscribe()
+        elif event == 'unsubscribe':
+            self.event_unsubscribe()
+        elif event == 'view_miniprogram':
+            pass
+
+    def event_subscribe(self):
+        """关注和类型事件"""
+
+    def event_unsubscribe(self):
+        """取消关注类型事件"""
+
+    def text(self):
+        """文本类型事件"""
+
+    def handle(self):
+        """启动逻辑的入口"""
+        msg_type = self.data['MsgType']
+
+        if msg_type == 'event':
+            self.event()
+        if msg_type == 'text':
+            self.text()
+        return self.reply_message
+
+    def reply_text(self, to_user: str, from_user: str, content: str):
+        """回复文本消息"""
+        create_time = int(time.time())
+        nonce = self.get_random_str()
+        text = f"""<xml>
+                        <ToUserName><![CDATA[{to_user}]]></ToUserName>
+                        <FromUserName><![CDATA[{from_user}]]></FromUserName>
+                        <CreateTime>{create_time}</CreateTime>
+                        <MsgType><![CDATA[text]]></MsgType>
+                        <Content><![CDATA[{content}]]></Content>
+                </xml>"""
+        self.reply_message = self.wechat_message_crypt.EncryptMsg(text, nonce, create_time)
+
+    def get_random_str(self):
+        """ 随机生成16位字符串
+        @return: 16位字符串
+        """
+        rule = string.ascii_letters + string.digits
+        str = random.sample(rule, 16)
+        return "".join(str)

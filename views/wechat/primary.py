@@ -1,9 +1,11 @@
+import xmltodict
 from flask import request
 from init import wechat_api, wechat_message_crypt
 from views.wechat import api
+from plugins.wechat.primary import Event
 
 
-@api.route('/signature/', methods=['GET', 'POST'])
+@api.route('/', methods=['GET'])
 def signature():
     """验证消息的确来自微信服务器"""
     signature = request.args.get('signature')
@@ -11,16 +13,22 @@ def signature():
     nonce = request.args.get('nonce')
     echo_str = request.args.get('echostr')
 
-    if request.method == "POST":
-        msg_signature = request.args.get('msg_signature')
-        error_code, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
-                                                          sMsgSignature=msg_signature,
-                                                          sTimeStamp=timestamp, sNonce=nonce)
-        print(error_code, xml, request.get_data().decode())
-        print(signature, timestamp, nonce)
-        return 'ok'
     return wechat_message_crypt.verity_token(signature=signature, timestamp=timestamp, nonce=nonce,
                                              echo_str=echo_str)
+
+
+@api.route('/', methods=['POST'])
+def event():
+    """公众号事件"""
+    timestamp = request.args.get('timestamp')
+    nonce = request.args.get('nonce')
+    msg_signature = request.args.get('msg_signature')
+    _, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
+                                             sMsgSignature=msg_signature, sTimeStamp=timestamp, sNonce=nonce)
+    content = xmltodict.parse(xml_input=xml)['xml']
+
+    event = Event(data=content, wechat_message_crypt=wechat_message_crypt)
+    return event.handle()
 
 
 @api.route('/menu/create/')
