@@ -107,7 +107,7 @@ class Event(object):
         """点击事件"""
         key = self.data['EventKey']
         items = {'TutorialOrder': '输入您的订单订单号即可直接查询订单啦!(订单号为纯数字)',
-                 'TutorialAddress': '中国浙江省台州市黄岩区公路港城市物流中心\n卢经理联系电话:13088629286'}
+                 'TutorialAddress': '中国浙江省台州市黄岩区\n公路港城市物流中心\n卢经理联系电话:13088629286'}
         message = items.get(key, "很抱歉,此功能暂未开放!")
         self.reply_message = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], message)
 
@@ -117,12 +117,25 @@ class Event(object):
 
     def text(self):
         """文本类型事件"""
+        message = self.data['Content']
 
-        self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
-                                             content=self.data['Content'])
+        order_info = self.text_parsing_order_uuid()
+        if order_info:
+            message = order_info
+        self.reply_message = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], message)
 
     def text_parsing_order_uuid(self):
         """尝试解析订单编号"""
+        content = self.data['Content']
+        message = ''
+        if len(content) == 24 and content.isdigit():
+            from models.business import Order
+            order = Order.query.filter_by(order_uuid=content).first()
+            if order:
+                message = f'订单编号:{order.order_uuid},订单详情:{order.description}'
+            else:
+                message = '经查询,并无此订单,请检查.'
+        return message
 
     def handle(self):
         """启动逻辑的入口"""
