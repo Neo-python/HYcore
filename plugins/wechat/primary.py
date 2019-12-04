@@ -123,8 +123,14 @@ class Event(object):
         """回复文本消息"""
         create_time = int(time.time())
         nonce = self.get_random_str()
-        text = f"""<xml><ToUserName><![CDATA[{to_user}]]></ToUserName><FromUserName><![CDATA[{from_user}]]></FromUserName><CreateTime>{create_time}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[{content}]]></Content></xml>"""
-        rep, xml = self.wechat_message_crypt.EncryptMsg(text, nonce)
+        text = f"""<xml>
+        <ToUserName><![CDATA[{to_user}]]></ToUserName>
+        <FromUserName><![CDATA[{from_user}]]></FromUserName>
+        <CreateTime>{create_time}</CreateTime>
+        <MsgType><![CDATA[text]]></MsgType>
+        <Content><![CDATA[{content}]]></Content>
+        </xml>"""
+        rep, xml = self.wechat_message_crypt.EncryptMsg(text, nonce, create_time)
         if rep == 0:
             return xml
         else:
