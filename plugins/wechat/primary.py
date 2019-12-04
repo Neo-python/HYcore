@@ -121,6 +121,8 @@ class Event(object):
             self.event()
         elif msg_type == 'text':
             self.text()
+        elif msg_type == 'image':
+            self.event_image()
 
         if self.reply_message:
             return self.reply_message
