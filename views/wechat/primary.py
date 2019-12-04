@@ -23,14 +23,14 @@ def event():
     timestamp = request.args.get('timestamp')
     nonce = request.args.get('nonce')
     msg_signature = request.args.get('msg_signature')
-    print(request.get_data())
+
     _, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
                                              sMsgSignature=msg_signature, sTimeStamp=timestamp, sNonce=nonce)
     content = xmltodict.parse(xml_input=xml)['xml']
 
-    event_export = Event(data=content, nonce=nonce,wechat_message_crypt=wechat_message_crypt)
-    result = event_export.handle()
-    return result
+    event_export = Event(data=content, nonce=nonce, wechat_message_crypt=wechat_message_crypt)
+
+    return event_export.handle()
 
 
 @api.route('/menu/create/')
