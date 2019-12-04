@@ -1,4 +1,5 @@
 """微信相关接口"""
+import random
 import time
 import config
 import requests
@@ -124,7 +125,7 @@ class Event(object):
         create_time = str(int(time.time()))
         text = f"""<xml>
         <ToUserName><![CDATA[{to_user}]]></ToUserName><FromUserName><![CDATA[{from_user}]]></FromUserName><CreateTime>{create_time}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[{content}]]></Content></xml>"""
-        rep, xml = self.wechat_message_crypt.EncryptMsg(text, self.nonce)
+        rep, xml = self.wechat_message_crypt.EncryptMsg(text, ''.join([str(random.randint(0, 9)) for _ in range(16)]))
         if rep == 0:
             return xml
         else:
