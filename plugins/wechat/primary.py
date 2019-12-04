@@ -103,7 +103,9 @@ class Event(object):
 
     def text(self):
         """文本类型事件"""
-        self.reply_text(self.data['FromUserName'], self.data['ToUserName'], self.data['Content'])
+        result = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], self.data['Content'])
+        print(result, '文本类型事件')
+        self.reply_message = result
 
     def handle(self):
         """启动逻辑的入口"""
@@ -129,7 +131,7 @@ class Event(object):
                         <MsgType><![CDATA[text]]></MsgType>
                         <Content><![CDATA[{content}]]></Content>
                 </xml>"""
-        self.reply_message = self.wechat_message_crypt.EncryptMsg(text, nonce, create_time)
+        return self.wechat_message_crypt.EncryptMsg(text, nonce, create_time)
 
     def get_random_str(self):
         """ 随机生成16位字符串
