@@ -129,12 +129,12 @@ class Event(object):
         """回复文本消息"""
         create_time = str(int(time.time()))
         text = f"""<xml>
-        <ToUserName>{to_user}</ToUserName>
-        <FromUserName>{from_user}</FromUserName>
-        <CreateTime>{create_time}</CreateTime>
-        <MsgType>text</MsgType>
-        <Content>{content}</Content>
-        </xml>"""
+  <ToUserName><![CDATA[{to_user}]]></ToUserName>
+  <FromUserName><![CDATA[{from_user}]]></FromUserName>
+  <CreateTime>{create_time}</CreateTime>
+  <MsgType><![CDATA[text]]></MsgType>
+  <Content><![CDATA[{content}]]></Content>
+</xml>"""
         rep, xml = self.wechat_message_crypt.EncryptMsg(text, self.nonce)
         if rep == 0:
             return xml
