@@ -59,10 +59,6 @@ def create_app():
     # app.config['SQLALCHEMY_ECHO'] = True
     db.init_app(app)
     with app.app_context():
-        from models.business import *
-        from models.common import *
-        from models.system import *
-        from models.user import *
         db.create_all(app=app)
     return app
 
