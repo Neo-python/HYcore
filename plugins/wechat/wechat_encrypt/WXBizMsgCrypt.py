@@ -50,7 +50,7 @@ class SHA1:
             sha.update("".join(sortlist).encode("utf8"))
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
         except Exception as e:
-            print(e)
+            print('getSHA1' + str(e))
             return ierror.WXBizMsgCrypt_ComputeSignature_Error, None
 
 
@@ -76,7 +76,7 @@ class XMLParse(object):
             touser_name = xml_tree.find("ToUserName")
             return ierror.WXBizMsgCrypt_OK, encrypt.text, touser_name.text
         except Exception as e:
-            print(e)
+            print("extract" + str(e))
             return ierror.WXBizMsgCrypt_ParseXml_Error, None, None
 
     def generate(self, encrypt, signature, timestamp, nonce):
@@ -167,7 +167,7 @@ class Prpcrypt(object):
             # 使用BASE64对密文进行解码，然后AES-CBC解密
             plain_text = cryptor.decrypt(base64.b64decode(text))
         except Exception as e:
-            print(e)
+            print('decrypt' + str(e))
             return ierror.WXBizMsgCrypt_DecryptAES_Error, None
         try:
             # pad = ord(plain_text[-1])
