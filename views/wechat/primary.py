@@ -29,7 +29,6 @@ def event():
 
     event_export = Event(data=content, nonce=nonce,wechat_message_crypt=wechat_message_crypt)
     result = event_export.handle()
-    print(content, result, '公众号事件post')
     return result
 
 
