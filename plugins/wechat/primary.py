@@ -95,16 +95,18 @@ class Event(object):
             pass
 
     def event_subscribe(self):
-        """关注和类型事件"""
+        """关注类型事件"""
+        self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
+                                             content='关注成功!')
 
     def event_unsubscribe(self):
         """取消关注类型事件"""
 
     def text(self):
         """文本类型事件"""
-        result = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
-                                 content=self.data['Content'])
-        self.reply_message = result
+
+        self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
+                                             content=self.data['Content'])
 
     def handle(self):
         """启动逻辑的入口"""
