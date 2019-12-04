@@ -104,7 +104,6 @@ class Event(object):
     def text(self):
         """文本类型事件"""
         result = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], self.data['Content'])
-        print(result, '文本类型事件')
         self.reply_message = result
 
     def handle(self):
@@ -124,14 +123,8 @@ class Event(object):
         """回复文本消息"""
         create_time = int(time.time())
         nonce = self.get_random_str()
-        text = f"""<xml>
-                        <ToUserName><![CDATA[{to_user}]]></ToUserName>
-                        <FromUserName><![CDATA[{from_user}]]></FromUserName>
-                        <CreateTime>{create_time}</CreateTime>
-                        <MsgType><![CDATA[text]]></MsgType>
-                        <Content><![CDATA[{content}]]></Content>
-                </xml>"""
-        return self.wechat_message_crypt.EncryptMsg(text, nonce, create_time)
+        text = f"""<xml><ToUserName><![CDATA[{to_user}]]></ToUserName><FromUserName><![CDATA[{from_user}]]></FromUserName><CreateTime>{create_time}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[{content}]]></Content></xml>"""
+        return self.wechat_message_crypt.EncryptMsg(text, nonce)
 
     def get_random_str(self):
         """ 随机生成16位字符串
