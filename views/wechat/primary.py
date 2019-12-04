@@ -6,7 +6,7 @@ from views.wechat import api
 from plugins.wechat.message_encrypt import WXBizMsgCrypt
 
 
-@api.route('/signature/')
+@api.route('/signature/', methods=['GET', 'POST'])
 def signature():
     """验证消息的确来自微信服务器"""
     signature = request.args.get('signature')
