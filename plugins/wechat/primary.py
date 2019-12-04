@@ -103,6 +103,7 @@ class Event(object):
 
     def text(self):
         """文本类型事件"""
+        self.reply_text(self.data['FromUserName'], self.data['ToUserName'], self.data['Content'])
 
     def handle(self):
         """启动逻辑的入口"""
