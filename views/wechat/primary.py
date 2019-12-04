@@ -15,7 +15,7 @@ def signature():
         error_code, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
                                                           sMsgSignature=signature,
                                                           sTimeStamp=timestamp, sNonce=nonce)
-        print(error_code, xml)
+        print(error_code, xml, request.get_data().decode())
         return 'ok'
     return wechat_message_crypt.verity_token(signature=signature, timestamp=timestamp, nonce=nonce,
                                              echo_str=echo_str)
