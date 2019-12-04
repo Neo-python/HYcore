@@ -66,6 +66,7 @@ class WechatApi:
         :return:
         """
         access_token = self.get_access_token(port=port)
+
         print(access_token)
         url = f'https://api.weixin.qq.com/cgi-bin/menu/create?access_token={access_token}'
         result = requests.post(url=url, json=body)
