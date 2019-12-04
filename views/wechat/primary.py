@@ -12,8 +12,9 @@ def signature():
     echo_str = request.args.get('echostr')
 
     if request.method == "POST":
+        msg_signature = request.args.get('msg_signature')
         error_code, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
-                                                          sMsgSignature=signature,
+                                                          sMsgSignature=msg_signature,
                                                           sTimeStamp=timestamp, sNonce=nonce)
         print(error_code, xml, request.get_data().decode())
         print(signature, timestamp, nonce)
