@@ -262,7 +262,7 @@ class WXBizMsgCrypt(object):
         ret, xml_content = pc.decrypt(encrypt, self.appid)
         return ret, xml_content.decode()
 
-    def verity_token_get(self, signature: str, timestamp: str, nonce: str, echo_str: str):
+    def verity_token(self, signature: str, timestamp: str, nonce: str, echo_str: str):
         """微信token验证, 验证通过返回echostr的值"""
         # signature = request.args.get('signature')
         # timestamp = request.args.get('timestamp')
