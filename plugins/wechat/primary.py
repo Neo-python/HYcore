@@ -113,7 +113,10 @@ class Event(object):
             self.event()
         if msg_type == 'text':
             self.text()
-        return self.reply_message
+        if self.reply_message:
+            return self.reply_message
+        else:
+            return 'success'
 
     def reply_text(self, to_user: str, from_user: str, content: str):
         """回复文本消息"""
