@@ -93,25 +93,36 @@ class Event(object):
             self.event_unsubscribe()
         elif event == 'view_miniprogram':
             pass
+        elif event == 'CLICK':
+            self.event_click()
 
     def event_subscribe(self):
         """关注类型事件"""
-        self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
-                                             content='海嘉粤运输服务欢迎您!')
+        self.reply_message = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], '海嘉粤运输服务欢迎您!')
 
     def event_unsubscribe(self):
         """取消关注类型事件"""
 
+    def event_click(self):
+        """点击事件"""
+        key = self.data['EventKey']
+        items = {'TutorialOrder': '输入您的订单订单号即可直接查询订单啦!(订单号为纯数字)',
+                 'TutorialAddress': '中国浙江省台州市黄岩区公路港城市物流中心\n卢经理联系电话:13088629286'}
+        message = items.get(key, "很抱歉,此功能暂未开放!")
+        self.reply_message = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], message)
+
     def event_image(self):
         """图片类型事件"""
-        self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
-                                             content='抱歉,我暂时还无法理解图片内容!')
+        self.reply_message = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], '抱歉,我暂时还无法理解图片内容!')
 
     def text(self):
         """文本类型事件"""
 
         self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
                                              content=self.data['Content'])
+
+    def text_parsing_order_uuid(self):
+        """尝试解析订单编号"""
 
     def handle(self):
         """启动逻辑的入口"""
