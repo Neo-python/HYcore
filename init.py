@@ -8,7 +8,7 @@ from pymysql import install_as_MySQLdb
 from plugins.HYplugins.sms import SMS
 from plugins.HYplugins.orm import db
 from plugins import wechat
-from plugins.wechat.message_encrypt import WXBizMsgCrypt
+from plugins.wechat.wechat_encrypt.WXBizMsgCrypt import WXBizMsgCrypt
 from plugins.HYplugins.common.position import Position
 from sts.sts import Sts
 from qcloud_cos import CosConfig
@@ -31,8 +31,8 @@ client = CosS3Client(cos_config)
 cos_sts = Sts(config.sts_config)
 # 微信
 wechat_api = wechat.WechatApi(app_id=config.APP_ID, app_secret=config.APP_SECRET)
-wechat_message_crypt = WXBizMsgCrypt.WXBizMsgCrypt(sToken=config.APP_SERVER_TOKEN,
-                                                   sEncodingAESKey=config.APP_EncodingAESKey, sAppId=config.APP_ID)
+wechat_message_crypt = WXBizMsgCrypt(sToken=config.APP_SERVER_TOKEN,
+                                     sEncodingAESKey=config.APP_EncodingAESKey, sAppId=config.APP_ID)
 # redis
 pool = redis.ConnectionPool(host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB, decode_responses=True)
 Redis = redis.StrictRedis(connection_pool=pool)

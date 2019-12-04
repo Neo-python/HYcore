@@ -1,6 +1,4 @@
 """微信相关接口"""
-import random
-import string
 import time
 import config
 import requests
