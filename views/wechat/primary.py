@@ -27,7 +27,7 @@ def event():
     _, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
                                              sMsgSignature=msg_signature, sTimeStamp=timestamp, sNonce=nonce)
     content = xmltodict.parse(xml_input=xml)['xml']
-
+    print(content)
     event_export = Event(data=content,  wechat_message_crypt=wechat_message_crypt)
 
     return event_export.handle()
@@ -40,3 +40,4 @@ def create_menu():
         # menu_config = json.load(file)
         # print(file.read())
         wechat_api.create_menu(body=file.read().encode(encoding='utf-8'), port="8090")
+    return "ok"
