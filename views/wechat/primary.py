@@ -28,9 +28,7 @@ def event():
     content = xmltodict.parse(xml_input=xml)['xml']
 
     event_export = Event(data=content, wechat_message_crypt=wechat_message_crypt)
-    result = event_export.handle()
-    print(result, '公众号事件post')
-    return result
+    return event_export.handle()
 
 
 @api.route('/menu/create/')
