@@ -79,10 +79,11 @@ class WechatApi:
 class Event(object):
     """处理各类事件"""
 
-    def __init__(self, data: dict, wechat_message_crypt):
+    def __init__(self, data: dict, nonce: str, wechat_message_crypt):
         self.data = data
         self.wechat_message_crypt = wechat_message_crypt
         self.reply_message = None
+        self.nonce = nonce
 
     def event(self):
         """事件类型事件"""
@@ -122,7 +123,6 @@ class Event(object):
     def reply_text(self, to_user: str, from_user: str, content: str):
         """回复文本消息"""
         create_time = str(int(time.time()))
-        nonce = self.get_random_str()
         text = f"""<xml>
         <ToUserName>{to_user}</ToUserName>
         <FromUserName>{from_user}</FromUserName>
@@ -130,16 +130,8 @@ class Event(object):
         <MsgType>text</MsgType>
         <Content>{content}</Content>
         </xml>"""
-        rep, xml = self.wechat_message_crypt.EncryptMsg(text, nonce, create_time)
+        rep, xml = self.wechat_message_crypt.EncryptMsg(text, self.nonce, create_time)
         if rep == 0:
             return xml
         else:
             return None
-
-    def get_random_str(self):
-        """ 随机生成16位字符串
-        @return: 16位字符串
-        """
-        rule = string.ascii_letters + string.digits
-        str = random.sample(rule, 16)
-        return "".join(str)
