@@ -29,7 +29,7 @@ def event():
 
     event_export = Event(data=content, wechat_message_crypt=wechat_message_crypt)
     result = event_export.handle()
-    print(result)
+    print(result, '公众号事件post')
     return result
 
 
