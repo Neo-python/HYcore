@@ -44,6 +44,10 @@ class SHA1:
         """
         try:
             token = token.decode()
+            print(token, type(token))
+            print(timestamp, type(timestamp))
+            print(nonce, type(nonce))
+            print(encrypt, type(encrypt))
             sortlist = [token, timestamp, nonce, encrypt]
             sortlist.sort()
             sha = hashlib.sha1()
