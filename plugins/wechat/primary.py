@@ -78,11 +78,10 @@ class WechatApi:
 class Event(object):
     """处理各类事件"""
 
-    def __init__(self, data: dict, nonce: str, wechat_message_crypt):
+    def __init__(self, data: dict, wechat_message_crypt):
         self.data = data
         self.wechat_message_crypt = wechat_message_crypt
         self.reply_message = None
-        self.nonce = nonce
 
     def event(self):
         """事件类型事件"""
@@ -123,9 +122,10 @@ class Event(object):
     def reply_text(self, to_user: str, from_user: str, content: str):
         """回复文本消息"""
         create_time = str(int(time.time()))
+        nonce = ''.join([str(random.randint(0, 9)) for _ in range(16)])
         text = f"""<xml>
         <ToUserName><![CDATA[{to_user}]]></ToUserName><FromUserName><![CDATA[{from_user}]]></FromUserName><CreateTime>{create_time}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[{content}]]></Content></xml>"""
-        rep, xml = self.wechat_message_crypt.EncryptMsg(text, ''.join([str(random.randint(0, 9)) for _ in range(16)]))
+        rep, xml = self.wechat_message_crypt.EncryptMsg(text, nonce)
         if rep == 0:
             return xml
         else:

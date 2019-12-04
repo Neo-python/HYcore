@@ -28,7 +28,7 @@ def event():
                                              sMsgSignature=msg_signature, sTimeStamp=timestamp, sNonce=nonce)
     content = xmltodict.parse(xml_input=xml)['xml']
 
-    event_export = Event(data=content, nonce=nonce, wechat_message_crypt=wechat_message_crypt)
+    event_export = Event(data=content,  wechat_message_crypt=wechat_message_crypt)
 
     return event_export.handle()
 
