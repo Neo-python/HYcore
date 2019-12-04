@@ -6,8 +6,7 @@
 # File Name: demo.py
 # Description: WXBizMsgCrypt 使用demo文件
 #########################################################################
-# from WXBizMsgCrypt import WXBizMsgCrypt
-from plugins.wechat.message_encrypt.WXBizMsgCrypt import WXBizMsgCrypt
+from plugins.wechat.wechat_encrypt.WXBizMsgCrypt import WXBizMsgCrypt
 
 if __name__ == "__main__":
     """ 

@@ -13,10 +13,14 @@ import random
 import hashlib
 import time
 import struct
-import xml.etree.cElementTree as ET
-import socket
 from Crypto.Cipher import AES
-from plugins.wechat.message_encrypt import ierror
+import xml.etree.cElementTree as ET
+import sys
+import socket
+# reload(sys)
+from plugins.wechat.wechat_encrypt import ierror
+
+# sys.setdefaultencoding('utf-8')
 
 """
 关于Crypto.Cipher模块，ImportError: No module named 'Crypto'解决方案
@@ -49,10 +53,10 @@ class SHA1:
             sortlist = [token, timestamp, nonce, encrypt]
             sortlist.sort()
             sha = hashlib.sha1()
-            sha.update("".join(sortlist).encode())
+            sha.update("".join(sortlist))
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
-        except Exception as err:
-            print(err)
+        except Exception as e:
+            # print e
             return ierror.WXBizMsgCrypt_ComputeSignature_Error, None
 
 
@@ -76,11 +80,9 @@ class XMLParse:
             xml_tree = ET.fromstring(xmltext)
             encrypt = xml_tree.find("Encrypt")
             touser_name = xml_tree.find("ToUserName")
-            if touser_name:
-                touser_name = touser_name.text
-            return ierror.WXBizMsgCrypt_OK, encrypt.text, touser_name
-        except Exception as err:
-            print(err)
+            return ierror.WXBizMsgCrypt_OK, encrypt.text, touser_name.text
+        except Exception as e:
+            # print e
             return ierror.WXBizMsgCrypt_ParseXml_Error, None, None
 
     def generate(self, encrypt, signature, timestamp, nonce):
@@ -92,7 +94,7 @@ class XMLParse:
         @return: 生成的xml字符串
         """
         resp_dict = {
-            'msg_encrypt': encrypt.decode('utf-8'),
+            'msg_encrypt': encrypt,
             'msg_signaturet': signature,
             'timestamp': timestamp,
             'nonce': nonce,
@@ -101,7 +103,7 @@ class XMLParse:
         return resp_xml
 
 
-class PKCS7Encoder:
+class PKCS7Encoder():
     """提供基于PKCS7算法的加解密接口"""
 
     block_size = 32
@@ -154,11 +156,11 @@ class Prpcrypt(object):
         # 加密
         cryptor = AES.new(self.key, self.mode, self.key[:16])
         try:
-            ciphertext = cryptor.encrypt(text.encode())
+            ciphertext = cryptor.encrypt(text)
             # 使用BASE64对加密后的字符串进行编码
             return ierror.WXBizMsgCrypt_OK, base64.b64encode(ciphertext)
-        except Exception as err:
-            print(err)
+        except Exception as e:
+            # print e
             return ierror.WXBizMsgCrypt_EncryptAES_Error, None
 
     def decrypt(self, text, appid):
@@ -170,14 +172,11 @@ class Prpcrypt(object):
             cryptor = AES.new(self.key, self.mode, self.key[:16])
             # 使用BASE64对密文进行解码，然后AES-CBC解密
             plain_text = cryptor.decrypt(base64.b64decode(text))
-        except Exception as err:
-            print(err)
+        except Exception as e:
+            # print e
             return ierror.WXBizMsgCrypt_DecryptAES_Error, None
         try:
-            if not isinstance(plain_text[-1], int):
-                pad = ord(plain_text[-1])
-            else:
-                pad = plain_text[-1]
+            pad = ord(plain_text[-1])
             # 去掉补位字符串
             # pkcs7 = PKCS7Encoder()
             # plain_text = pkcs7.encode(plain_text)
@@ -185,12 +184,11 @@ class Prpcrypt(object):
             content = plain_text[16:-pad]
             xml_len = socket.ntohl(struct.unpack("I", content[: 4])[0])
             xml_content = content[4: xml_len + 4]
-            from_appid = content[xml_len + 4:].decode()
-        except Exception as err:
-            print(err)
+            from_appid = content[xml_len + 4:]
+        except Exception as e:
+            # print e
             return ierror.WXBizMsgCrypt_IllegalBuffer, None
         if from_appid != appid:
-            print(from_appid, appid)
             return ierror.WXBizMsgCrypt_ValidateAppid_Error, None
         return 0, xml_content
 
@@ -233,7 +231,7 @@ class WXBizMsgCrypt(object):
             timestamp = str(int(time.time()))
         # 生成安全签名
         sha1 = SHA1()
-        ret, signature = sha1.getSHA1(self.token, timestamp, sNonce, encrypt.decode())
+        ret, signature = sha1.getSHA1(self.token, timestamp, sNonce, encrypt)
         if ret != 0:
             return ret, None
         xmlParse = XMLParse()
@@ -260,21 +258,4 @@ class WXBizMsgCrypt(object):
             return ierror.WXBizMsgCrypt_ValidateSignature_Error, None
         pc = Prpcrypt(self.key)
         ret, xml_content = pc.decrypt(encrypt, self.appid)
-        return ret, xml_content.decode()
-
-    def verity_token(self, signature: str, timestamp: str, nonce: str, echo_str: str):
-        """微信token验证, 验证通过返回echostr的值"""
-        # signature = request.args.get('signature')
-        # timestamp = request.args.get('timestamp')
-        # nonce = request.args.get('nonce')
-        # echo_str = request.args.get('echostr')
-        list_ = [self.token, timestamp, nonce]
-        list_.sort()
-        list_ = ''.join(list_).encode()
-        sha1 = hashlib.sha1()
-        sha1.update(list_)
-        hashcode = sha1.hexdigest()
-        if hashcode == signature:
-            return echo_str
-        else:
-            return ''
+        return ret, xml_content
