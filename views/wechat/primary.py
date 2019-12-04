@@ -16,6 +16,7 @@ def signature():
                                                           sMsgSignature=signature,
                                                           sTimeStamp=timestamp, sNonce=nonce)
         print(error_code, xml, request.get_data().decode())
+        print(signature, timestamp, nonce)
         return 'ok'
     return wechat_message_crypt.verity_token(signature=signature, timestamp=timestamp, nonce=nonce,
                                              echo_str=echo_str)
