@@ -130,7 +130,7 @@ class Event(object):
         <MsgType>text</MsgType>
         <Content>{content}</Content>
         </xml>"""
-        rep, xml = self.wechat_message_crypt.EncryptMsg(text, self.nonce, create_time)
+        rep, xml = self.wechat_message_crypt.EncryptMsg(text, self.nonce)
         if rep == 0:
             return xml
         else:
