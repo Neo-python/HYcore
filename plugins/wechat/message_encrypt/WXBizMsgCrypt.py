@@ -91,6 +91,7 @@ class XMLParse:
         @param nonce: 随机字符串
         @return: 生成的xml字符串
         """
+        print(encrypt, "生成xml消息")
         resp_dict = {
             'msg_encrypt': encrypt.decode('utf-8'),
             'msg_signaturet': signature,
