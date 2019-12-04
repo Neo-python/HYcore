@@ -69,6 +69,6 @@ class WechatApi:
 
         print(access_token)
         url = f'https://api.weixin.qq.com/cgi-bin/menu/create?access_token={access_token}'
-        result = requests.post(url=url, json=body)
+        result = requests.post(url=url, data=body)
         print(result)
         print(result.json())

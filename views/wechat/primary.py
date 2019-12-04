@@ -23,5 +23,6 @@ def signature():
 def create_menu():
     """创建菜单"""
     with open("wechat_menu_config.json", "r", encoding="utf-8") as file:
-        menu_config = json.load(file)
-        wechat_api.create_menu(body=menu_config, port="8090")
+        # menu_config = json.load(file)
+        # print(file.read())
+        wechat_api.create_menu(body=file.read(), port="8090")
