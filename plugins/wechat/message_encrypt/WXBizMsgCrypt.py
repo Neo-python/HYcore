@@ -92,7 +92,7 @@ class XMLParse:
         @return: 生成的xml字符串
         """
         resp_dict = {
-            'msg_encrypt': encrypt,
+            'msg_encrypt': encrypt.decode('utf-8'),
             'msg_signaturet': signature,
             'timestamp': timestamp,
             'nonce': nonce,
