@@ -121,7 +121,7 @@ class Event(object):
 
     def reply_text(self, to_user: str, from_user: str, content: str):
         """回复文本消息"""
-        create_time = str(int(time.time()))
+        create_time = str(int(time.time()))[:8]
         text = f"""<xml>
         <ToUserName><![CDATA[{to_user}]]></ToUserName>
         <FromUserName><![CDATA[{from_user}]]></FromUserName>
