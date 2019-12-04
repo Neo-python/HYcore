@@ -138,7 +138,7 @@ class Prpcrypt(object):
         # self.key = base64.b64decode(key+"=")
         self.key = key
         # 设置加解密模式为AES的CBC模式
-        self.mode = AES.MODE_ECB
+        self.mode = AES.MODE_CBC
 
     def encrypt(self, text, appid):
         """对明文进行加密
