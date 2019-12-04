@@ -15,7 +15,7 @@ def signature():
     echo_str = request.args.get('echostr')
     wechat_message_crypt = WXBizMsgCrypt.WXBizMsgCrypt(sToken=config.APP_SERVER_TOKEN,
                                                        sEncodingAESKey=config.APP_EncodingAESKey, sAppId=config.APP_ID)
-
+    print(request.method)
     if request.method == "POST":
         print(
             wechat_message_crypt.DecryptMsg(request.data, sMsgSignature=signature, sTimeStamp=timestamp, sNonce=nonce))
