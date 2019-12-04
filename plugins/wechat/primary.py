@@ -97,10 +97,15 @@ class Event(object):
     def event_subscribe(self):
         """关注类型事件"""
         self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
-                                             content='关注成功!')
+                                             content='海嘉粤运输服务欢迎您!')
 
     def event_unsubscribe(self):
         """取消关注类型事件"""
+
+    def event_image(self):
+        """图片类型事件"""
+        self.reply_message = self.reply_text(to_user=self.data['FromUserName'], from_user=self.data['ToUserName'],
+                                             content='抱歉,我暂时还无法理解图片内容!')
 
     def text(self):
         """文本类型事件"""
@@ -114,8 +119,9 @@ class Event(object):
 
         if msg_type == 'event':
             self.event()
-        if msg_type == 'text':
+        elif msg_type == 'text':
             self.text()
+
         if self.reply_message:
             return self.reply_message
         else:
