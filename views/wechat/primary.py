@@ -11,10 +11,11 @@ def signature():
     nonce = request.args.get('nonce')
     echo_str = request.args.get('echostr')
 
-    print(request.method, request.data)
     if request.method == "POST":
-        print(
-            wechat_message_crypt.DecryptMsg(request.data.decode('utf-8'), sMsgSignature=signature, sTimeStamp=timestamp, sNonce=nonce))
+        error_code, xml = wechat_message_crypt.DecryptMsg(sPostData=request.get_data().decode(),
+                                                          sMsgSignature=signature,
+                                                          sTimeStamp=timestamp, sNonce=nonce)
+        print(error_code, xml)
         return 'ok'
     return wechat_message_crypt.verity_token(signature=signature, timestamp=timestamp, nonce=nonce,
                                              echo_str=echo_str)
