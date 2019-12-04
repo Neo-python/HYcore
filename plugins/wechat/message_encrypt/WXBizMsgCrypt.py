@@ -104,7 +104,7 @@ class XMLParse:
 class PKCS7Encoder:
     """提供基于PKCS7算法的加解密接口"""
 
-    block_size = 32
+    block_size = 16
 
     def encode(self, text):
         """ 对需要加密的明文进行填充补位
@@ -126,7 +126,7 @@ class PKCS7Encoder:
         @return: 删除补位字符后的明文
         """
         pad = ord(decrypted[-1])
-        if pad < 1 or pad > 32:
+        if pad < 1 or pad > 16:
             pad = 0
         return decrypted[:-pad]
 
