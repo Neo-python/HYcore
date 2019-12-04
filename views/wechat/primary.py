@@ -19,6 +19,7 @@ def signature():
     if request.method == "POST":
         print(
             wechat_message_crypt.DecryptMsg(request.data, sMsgSignature=signature, sTimeStamp=timestamp, sNonce=nonce))
+        return 'ok'
     return wechat_message_crypt.verity_token(signature=signature, timestamp=timestamp, nonce=nonce,
                                              echo_str=echo_str)
 
