@@ -254,3 +254,20 @@ class WXBizMsgCrypt(object):
         pc = Prpcrypt(self.key)
         ret, xml_content = pc.decrypt(encrypt, self.appid)
         return ret, xml_content
+
+    def verity_token(self, signature: str, timestamp: str, nonce: str, echo_str: str):
+        """微信token验证, 验证通过返回echostr的值"""
+        # signature = request.args.get('signature')
+        # timestamp = request.args.get('timestamp')
+        # nonce = request.args.get('nonce')
+        # echo_str = request.args.get('echostr')
+        list_ = [self.token, timestamp, nonce]
+        list_.sort()
+        list_ = ''.join(list_).encode()
+        sha1 = hashlib.sha1()
+        sha1.update(list_)
+        hashcode = sha1.hexdigest()
+        if hashcode == signature:
+            return echo_str
+        else:
+            return ''
