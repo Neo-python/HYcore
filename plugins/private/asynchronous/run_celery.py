@@ -1,4 +1,4 @@
-from init import create_app, celery
+from plugins import create_app, celery
 
 app = create_app()
 app.app_context().push()

@@ -10,10 +10,11 @@ class WechatApi:
 
     access_token_redis_key = "WechatAccessToken"
 
-    def __init__(self, app_id: str, app_secret: str):
+    def __init__(self, app_id: str, app_secret: str, redis):
         """对象初始化"""
         self.app_id = app_id
         self.app_secret = app_secret
+        self.Redis = redis
 
     def get_open_id(self, code: str, port: str) -> str:
         """获取open_id
@@ -39,8 +40,7 @@ class WechatApi:
         :param port: 应用端口号
         :return:
         """
-        from init import Redis
-        access_token = Redis.get(self.access_token_redis_key + port)
+        access_token = self.Redis.get(self.access_token_redis_key + port)
         if access_token:
             return access_token
         else:
@@ -51,14 +51,13 @@ class WechatApi:
         :param port: 应用端口号
         :return:
         """
-        from init import Redis
         account = self.get_account(port=port)
         url = f'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={account["app_id"]}&secret={account["secret"]}'
 
         result = requests.get(url=url)
         result = result.json()
         access_token = result['access_token']
-        Redis.set(self.access_token_redis_key + port, access_token, ex=7140)
+        self.Redis.set(self.access_token_redis_key + port, access_token, ex=7140)
         return access_token
 
     def create_menu(self, body: dict, port: str):

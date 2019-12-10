@@ -1,6 +1,6 @@
 import xmltodict
 from flask import request
-from init import wechat_api, wechat_message_crypt
+from plugins import wechat_api, wechat_message_crypt
 from views.wechat import api
 from plugins.wechat.primary import Event
 
