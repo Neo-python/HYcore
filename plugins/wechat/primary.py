@@ -107,7 +107,7 @@ class Event(object):
         """点击事件"""
         key = self.data['EventKey']
         items = {'TutorialOrder': '输入您订单的单号即可直接查询订单啦!(订单号为纯数字)',
-                 'TutorialAddress': '中国浙江省台州市黄岩区\n公路港城市物流中心\n卢经理联系电话:13088629286'}
+                 'TutorialAddress': '浙江省台州市黄岩区\n院桥高速出口传化公路港城市物流中心\n卢经理联系电话:13088629286'}
         message = items.get(key, "很抱歉,此功能暂未开放!")
         self.reply_message = self.reply_text(self.data['FromUserName'], self.data['ToUserName'], message)
 
