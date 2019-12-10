@@ -26,7 +26,7 @@ class WechatApi:
         url = f'https://api.weixin.qq.com/sns/jscode2session?appid={account["app_id"]}&secret={account["secret"]}&js_code={code}&grant_type=authorization_code'
         result = requests.get(url)
         result = result.json()
-        return result.get('open_id', '')
+        return result.get('openid', '')
 
     def get_account(self, port: str) -> dict:
         """获取小程序账号信息,AppID/AppSecret
