@@ -1,4 +1,4 @@
-import platform
+import os
 from flask import jsonify
 from plugins import create_app
 from plugins.HYplugins.error import ViewException
@@ -24,7 +24,7 @@ def server_error(error):
 
 
 if __name__ == '__main__':
-    if platform.system() == 'Linux':
-        app.run(port=8090, host='127.0.0.1', debug=True)
+    if 'test' in os.getcwd():
+        app.run(port=8080, debug=True)
     else:
-        app.run(port=8080, host='127.0.0.1', debug=True)
+        app.run(port=8090)
