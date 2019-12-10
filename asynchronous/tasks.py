@@ -1,7 +1,7 @@
 """
 apply_async
 """
-from init import celery, sms
+from plugins import celery, sms
 from plugins.private.asynchronous.primary import db_session
 
 

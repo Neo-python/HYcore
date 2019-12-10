@@ -2,7 +2,7 @@ import config
 import uuid
 from flask import request
 from views.common import api
-from init import client, sms, cos_sts, wechat_api, position
+from plugins import client, sms, cos_sts, wechat_api, position
 from asynchronous import tasks
 from forms.common import primary as forms
 from models.common import Images
