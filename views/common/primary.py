@@ -2,11 +2,12 @@ import config
 import uuid
 from flask import request
 from views.common import api
-from plugins import client, sms, cos_sts, wechat_api, position
+
 from asynchronous import tasks
 from forms.common import primary as forms
 from models.common import Images
 from models.system import Admin
+from plugins import client, sms, cos_sts, wechat_api, position, apps_redis
 from plugins.HYplugins.common import ordinary
 from plugins.HYplugins.error import ViewException
 
@@ -98,3 +99,16 @@ def position_distance():
     result = position.distance(origin=form.origin.data, destinations=form.destinations.data)
 
     return ordinary.result_format(data=result)
+
+
+@api.route('/token/clear/')
+def token_clear():
+    """清除用户token"""
+    form = forms.TokenClearForm(request.args).validate_()
+
+    redis = apps_redis.get_redis(port=form.port.data)
+
+    redis_key = f'UserInfo_{form.uuid.data}'
+    redis.delete(redis_key)
+
+    return ordinary.result_format()

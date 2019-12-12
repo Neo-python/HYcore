@@ -40,7 +40,7 @@ class UploadUrlForm(BaseForm):
 
     user_uuid = wtforms.StringField(validators=[
         DataRequired(message=VM.say('required', '用户编号')),
-        Length(max=32, message=VM.say('length_unite', '用户编号', 32))
+        Length(max=39, message=VM.say('length_unite', '用户编号', 39))
     ])
 
 
@@ -64,4 +64,17 @@ class PositionDistanceForm(BaseForm):
     ])
     destinations = JsonField(validators=[
         DataRequired(message=VM.say('required', '目标点坐标'))
+    ])
+
+
+class TokenClearForm(BaseForm):
+    """清除用户token"""
+
+    uuid = wtforms.StringField(validators=[
+        DataRequired(message=VM.say('required', '用户编号')),
+        Length(max=39, message=VM.say('length_unite', '用户编号', 39))
+    ])
+
+    port = wtforms.StringField(validators=[
+        DataRequired(message=VM.say('required', 'port'))
     ])
