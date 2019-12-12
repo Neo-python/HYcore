@@ -103,7 +103,7 @@ def position_distance():
 
 @api.route('/token/clear/')
 def token_clear():
-    """清除用户token"""
+    """清除其他应用用户token"""
     form = forms.TokenClearForm(request.args).validate_()
 
     redis = apps_redis.get_redis(port=form.port.data)
