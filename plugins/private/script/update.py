@@ -16,20 +16,6 @@ os.system(
     'nohup celery -A plugins.private.asynchronous.run_celery:celery worker & \;'
     'python3 /Users/NeoMacMini/work/HY/HYcore/plugins/private/script/database_update.py'
 )
-# os.system(
-#     'cd /home/ubuntu/neo/HYcore/models/HYModels;'
-#     'git pull;'
-#     'cd /home/ubuntu/neo/HYcore/plugins/HYplugins;'
-#     'git pull;'
-#     '. /home/ubuntu/neo/venvs/core/bin/activate;'
-#     'cd /home/ubuntu/neo/HYcore;'
-#     'git pull;'
-#     'pip install -r requirements.txt;'
-#     'killall -9 celery;'
-#     'cd /home/ubuntu/neo/HYcore;'
-#     'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &;'
-#     'python3 /Users/NeoMacMini/work/HY/HYcore/plugins/private/script/database_update.py;'
-# )
 
 print('core complete')
 
