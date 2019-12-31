@@ -40,7 +40,7 @@ class UploadUrlForm(BaseForm):
 
     user_uuid = wtforms.StringField(validators=[
         DataRequired(message=VM.say('required', '用户编号')),
-        Length(max=39, message=VM.say('length_unite', '用户编号', 39))
+        Length(max=32, message=VM.say('length_unite', '用户编号', 32))
     ])
 
 
@@ -72,7 +72,7 @@ class TokenClearForm(BaseForm):
 
     uuid = wtforms.StringField(validators=[
         DataRequired(message=VM.say('required', '用户编号')),
-        Length(max=39, message=VM.say('length_unite', '用户编号', 39))
+        Length(max=40, message=VM.say('length_unite', '用户编号', 40))
     ])
 
     port = wtforms.StringField(validators=[
