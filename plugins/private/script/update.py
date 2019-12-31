@@ -14,7 +14,7 @@ os.system(
     'killall -9 celery;'
     'cd /home/ubuntu/neo/HYcore;'
     'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
-    'python3 /Users/NeoMacMini/work/HY/HYcore/plugins/private/script/database_update.py'
+    'python3 /home/ubuntu/neo/HYcore/plugins/private/script/database_update.py'
 )
 
 print('core complete')

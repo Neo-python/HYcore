@@ -1,7 +1,7 @@
 import os
 
-os.system('source /Users/NeoMacMini/work/vevns/HYcore/bin/activate;'
-          'cd /Users/NeoMacMini/work/HY/HYcore/plugins/private/alembic;'
+os.system('source /home/ubuntu/neo/vevns/core/bin/activate;'
+          'cd /home/ubuntu/neo/HYcore/plugins/private/alembic;'
           'alembic revision --autogenerate -m "备注";'
           'alembic upgrade head;'
           )
