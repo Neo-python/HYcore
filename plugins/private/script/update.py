@@ -13,7 +13,7 @@ os.system(
     'pip install -r requirements.txt;'
     'killall -9 celery;'
     'cd /home/ubuntu/neo/HYcore;'
-    'nohup celery -A plugins.private.asynchronous.run_celery:celery worker & \;'
+    'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
     'python3 /Users/NeoMacMini/work/HY/HYcore/plugins/private/script/database_update.py'
 )
 
