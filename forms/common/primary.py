@@ -49,7 +49,6 @@ class GetOpenIdForm(BaseForm):
 
     code = wtforms.StringField(validators=[
         DataRequired(message=VM.say('required', 'code')),
-        # Length(max=10, message=VM.say('length', 'code', 1, 10))
     ])
 
     port = wtforms.StringField(validators=[
