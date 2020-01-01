@@ -1,7 +1,7 @@
 import os
 
 print('start')
-# # core
+# core
 os.system(
     'cd /home/ubuntu/neo/HYcore/models/HYModels;'
     'git pull;'
