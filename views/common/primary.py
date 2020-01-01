@@ -15,6 +15,7 @@ from plugins.HYplugins.error import ViewException
 @api.route('/get_open_id/')
 def get_open_id():
     """获取open_id"""
+
     form = forms.GetOpenIdForm(request.args).validate_()
     print("获取open_id", form.data)
     if form.code.data == 'gmneo000000':
