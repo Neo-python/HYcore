@@ -1,9 +1,9 @@
 import config
 import uuid
 import requests
-from flask import request
+import json
+from flask import request, jsonify
 from views.common import api
-
 from asynchronous import tasks
 from forms.common import primary as forms
 from models.common import Images
@@ -129,5 +129,4 @@ def factory_get_token():
     redis.set(f"CoreRandom_{random}", "1", ex=10)
     resp = requests.get(
         url=f'https://factory.tzhjyysyxgs.com/user/token/internal_use/?factory_uuid={form.factory_uuid.data}&random={random}')
-    print(resp.content)
-    return ordinary.result_format()
+    return jsonify(json.loads(resp.content.decode()))
