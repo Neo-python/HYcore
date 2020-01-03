@@ -128,5 +128,4 @@ def factory_get_token():
 
     print(resp.content)
     print(resp.status_code)
-
     return ordinary.result_format()
