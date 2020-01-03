@@ -126,7 +126,7 @@ def factory_get_token():
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
     }
     resp = requests.get(
-        url=f'https://127.0.0.1:{config.factory_server_port}/user/token/internal_use/?factory_uuid={form.factory_uuid}',
+        url=f'http://127.0.0.1:{config.factory_server_port}/user/token/internal_use/?factory_uuid={form.factory_uuid}',
         headers=headers)
 
     print(resp.content)
