@@ -1,5 +1,6 @@
 import config
 import uuid
+import requests
 from flask import request
 from views.common import api
 
@@ -111,4 +112,20 @@ def token_clear():
     redis_key = f'UserInfo_{form.uuid.data}'
     redis.delete(redis_key)
 
+    return ordinary.result_format()
+
+
+@api.route('/factory/get_token/')
+def factory_get_token():
+    """获取厂家端token
+    参数:
+    factory_uuid:str
+    """
+    form = forms.GetFactoryToken(request.args).validate_()
+
+    resp = requests.get(
+        url=f'http://127.0.0.1:{config.factory_server_port}/token/internal_use/?factory_uuid={form.factory_uuid}')
+
+    print(resp.content)
+    print(resp.status_code)
     return ordinary.result_format()
