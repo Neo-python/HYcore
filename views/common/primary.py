@@ -124,7 +124,7 @@ def factory_get_token():
     form = forms.GetFactoryToken(request.args).validate_()
 
     resp = requests.get(
-        url=f'http://127.0.0.1:{config.factory_server_port}/token/internal_use/?factory_uuid={form.factory_uuid}')
+        url=f'http://127.0.0.1:{config.factory_server_port}/user/token/internal_use/?factory_uuid={form.factory_uuid}')
 
     print(resp.content)
     print(resp.status_code)
