@@ -83,6 +83,5 @@ class GetFactoryToken(BaseForm):
     """获取厂家token"""
 
     factory_uuid = wtforms.StringField(validators=[
-        DataRequired(message=VM.say('required', '用户编号')),
-        Length(max=40, message=VM.say('length_unite', '用户编号', 40))
+        DataRequired(message=VM.say('required', '用户编号'))
     ])
