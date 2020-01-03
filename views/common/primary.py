@@ -9,7 +9,7 @@ from forms.common import primary as forms
 from models.common import Images
 from models.system import Admin
 from plugins import client, sms, cos_sts, wechat_api, position, apps_redis
-from plugins.HYplugins.common import ordinary
+from plugins.HYplugins.common import ordinary, generate_verify_code
 from plugins.HYplugins.error import ViewException
 
 
@@ -118,17 +118,16 @@ def token_clear():
 @api.route('/factory/get_token/')
 def factory_get_token():
     """获取厂家端token
+    写入随机码,以此验证请求.
     参数:
     factory_uuid:str
     """
     form = forms.GetFactoryToken(request.args).validate_()
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
-    }
-    resp = requests.get(
-        url=f'https://factory.tzhjyysyxgs.com/user/token/internal_use/?factory_uuid={form.factory_uuid.data}',
-        headers=headers)
 
+    random = generate_verify_code(12)
+    redis = apps_redis.get_redis(config.AppsRedisConfig.get('8091'))
+    redis.set(f"CoreRandom_{random}", "", ex=10)
+    resp = requests.get(
+        url=f'https://factory.tzhjyysyxgs.com/user/token/internal_use/?factory_uuid={form.factory_uuid.data}&random={random}')
     print(resp.content)
-    print(resp.status_code)
     return ordinary.result_format()
