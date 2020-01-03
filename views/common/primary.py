@@ -126,7 +126,7 @@ def factory_get_token():
 
     random = generate_verify_code(12)
     redis = apps_redis.get_redis(config.AppsRedisConfig.get('8091'))
-    redis.set(f"CoreRandom_{random}", "", ex=10)
+    redis.set(f"CoreRandom_{random}", "1", ex=10)
     resp = requests.get(
         url=f'https://factory.tzhjyysyxgs.com/user/token/internal_use/?factory_uuid={form.factory_uuid.data}&random={random}')
     print(resp.content)
