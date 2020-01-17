@@ -1,0 +1,5 @@
+Generic single-database configuration.
+# 生成更新脚本
+alembic revision --autogenerate -m "备注"
+# 执行
+alembic upgrade head

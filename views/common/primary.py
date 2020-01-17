@@ -1,14 +1,15 @@
 import config
 import uuid
-from flask import request
+import requests
+import json
+from flask import request, jsonify
 from views.common import api
-
 from asynchronous import tasks
 from forms.common import primary as forms
 from models.common import Images
 from models.system import Admin
 from plugins import client, sms, cos_sts, wechat_api, position, apps_redis
-from plugins.HYplugins.common import ordinary
+from plugins.HYplugins.common import ordinary, generate_verify_code
 from plugins.HYplugins.error import ViewException
 
 
@@ -112,3 +113,23 @@ def token_clear():
     redis.delete(redis_key)
 
     return ordinary.result_format()
+
+
+@api.route('/factory/get_token/')
+def factory_get_token():
+    """获取厂家端token
+    写入随机码,以此验证请求.
+    参数:
+    factory_uuid:str
+    """
+    form = forms.GetFactoryToken(request.args).validate_()
+
+    try:
+        random = generate_verify_code(12)
+        redis = apps_redis.get_redis('8091')
+        redis.set(f"CoreRandom_{random}", "1", ex=10)
+        resp = requests.get(
+            url=f'https://factory.tzhjyysyxgs.com/user/token/internal_use/?factory_uuid={form.factory_uuid.data}&random={random}')
+        return jsonify(json.loads(resp.content.decode()))
+    except Exception:
+        return ordinary.result_format(error_code=5000, message='服务器未知错误')

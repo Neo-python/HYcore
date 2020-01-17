@@ -7,9 +7,11 @@ from alembic import context
 import os
 import sys
 from pymysql import install_as_MySQLdb
+
 sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "../../..")))
 from plugins.HYplugins import orm
 from plugins import create_app
+
 install_as_MySQLdb()
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -26,10 +28,16 @@ fileConfig(config.config_file_name)
 orm.db.create_all(app=create_app())
 target_metadata = orm.db.metadata
 
+
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+def include_object(object, name, type_, reflected, compare_to):
+    if type_ == "table" and reflected and compare_to is None:
+        return False
+    else:
+        return True
 
 
 def run_migrations_offline():
@@ -49,6 +57,7 @@ def run_migrations_offline():
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
+        include_object=include_object,
         dialect_opts={"paramstyle": "named"},
     )
 
@@ -71,7 +80,7 @@ def run_migrations_online():
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata, include_object=include_object
         )
 
         with context.begin_transaction():

@@ -2,7 +2,6 @@ import os
 
 print('start')
 # core
-# 'uwsgi --reload /home/ubuntu/neo/HYcore/server.pid;'
 os.system(
     'cd /home/ubuntu/neo/HYcore/models/HYModels;'
     'git pull;'
@@ -14,8 +13,8 @@ os.system(
     'pip install -r requirements.txt;'
     'killall -9 celery;'
     'cd /home/ubuntu/neo/HYcore;'
-    'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &;'
-    'python3 /Users/NeoMacMini/work/HY/HYcore/plugins/private/script/database_update.py;'
+    'nohup celery -A plugins.private.asynchronous.run_celery:celery worker &'
+    'python3 /home/ubuntu/neo/HYcore/plugins/private/script/database_update.py'
 )
 
 print('core complete')
