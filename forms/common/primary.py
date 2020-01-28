@@ -40,7 +40,7 @@ class UploadUrlForm(BaseForm):
 
     user_uuid = wtforms.StringField(validators=[
         DataRequired(message=VM.say('required', '用户编号')),
-        Length(max=32, message=VM.say('length_unite', '用户编号', 32))
+        Length(max=40, message=VM.say('system_number', '用户编号', 30, 40))
     ])
 
 
@@ -49,6 +49,7 @@ class GetOpenIdForm(BaseForm):
 
     code = wtforms.StringField(validators=[
         DataRequired(message=VM.say('required', 'code')),
+        # Length(max=10, message=VM.say('length', 'code', 1, 10))
     ])
 
     port = wtforms.StringField(validators=[
@@ -71,7 +72,7 @@ class TokenClearForm(BaseForm):
 
     uuid = wtforms.StringField(validators=[
         DataRequired(message=VM.say('required', '用户编号')),
-        Length(max=40, message=VM.say('length_unite', '用户编号', 40))
+        Length(max=40, message=VM.say('system_number', '用户编号', 30, 40))
     ])
 
     port = wtforms.StringField(validators=[
@@ -83,5 +84,7 @@ class GetFactoryToken(BaseForm):
     """获取厂家token"""
 
     factory_uuid = wtforms.StringField(validators=[
+        DataRequired(message=VM.say('required', '用户编号')),
+        Length(max=40, message=VM.say('length_unite', '用户编号', 40)),
         DataRequired(message=VM.say('required', '用户编号'))
     ])
